@@ -33,6 +33,12 @@ def rename_strategy(name, stype=""):
     elif stype == "hulu":
         res = name.split("/")[-1].replace(".rmvb", "").replace("葫芦兄弟", "")
         return res
+    elif stype == "honglou":
+        res = name.split("/")[-1].replace(".rmvb", "")
+        return res
+    elif stype == "tianlong":
+        res = name.split("/")[-1].replace(".rmvb", "")
+        return res
     return res
 
 def video_to_audio(input_path, output_path):
@@ -42,6 +48,33 @@ def video_to_audio(input_path, output_path):
     audio.write_audiofile(output_path)
 
 #video_to_audio("data/1.mkv", "data/1.mp3")
+
+def zipdir(dirname):
+    src = "data_audio/shuihu"
+    for root, dirs, files in os.walk(src):
+        # root 表示当前正在访问的文件夹路径
+        # dirs 表示该文件夹下的子目录名list
+        # files 表示该文件夹下的文件list
+
+        # 遍历文件
+        counter = 0
+        total = 0
+        for f in files:
+            counter += 1
+            filename = os.path.join(root, f)
+            command = "cp " + filename + " tmp"
+            os.system(command)
+            if counter % 3 == 0:
+                command = "zip -r " + str(total) + ".zip tmp"
+                print command
+                os.system(command)
+                command = "rm tmp/*"
+                os.system(command)
+                total += 1
+            #tar_name  = rename_strategy(filename, "sanguo")
+
+#zipdir("aa")
+#exit()
 
 def trans_videos(dirname, convert=True):
     src = base + "video/" + dirname
@@ -72,7 +105,9 @@ def trans_videos(dirname, convert=True):
 #trans_videos(base + "video/zhouxingchi", "data_audio/zhouxingchi")
 #trans_videos(base + "video/kangxi", "data_audio/kangxi")
 #trans_videos("shuihu")
-trans_videos("hulu")
+#trans_videos("hulu")
+#trans_videos("honglou")
+trans_videos("tianlong")
 
 def compress_audio(input_path, output_path):
     # 读取音频文件，设置采样率<default=44100>
