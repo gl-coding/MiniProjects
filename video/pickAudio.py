@@ -49,6 +49,9 @@ def rename_strategy(name, stype=""):
         split_res = [item for item in name.split(".") if "s" in item and "e" in item]
         res = split_res[0].split("e")[1]
         return res
+    elif stype == "fengshen":
+        res = name.split("/")[-1].split("-")[-1].replace(".mpg", "").replace("EP", "")
+        return res
     return res
 
 def video_to_audio(input_path, output_path):
@@ -84,7 +87,8 @@ def zipdir(dirname):
 
 #zipdir("tianlong")
 #zipdir("shendiao")
-#exit()
+zipdir("fengshen")
+exit()
 
 def trans_videos(dirname, convert=True):
     src = base + "video/" + dirname
@@ -128,7 +132,8 @@ def trans_videos(dirname, convert=True):
 #trans_videos("bigbang2")
 #trans_videos("bigbang3")
 #trans_videos("bigbang4")
-trans_videos("bigbang5")
+#trans_videos("bigbang5")
+trans_videos("fengshen")
 
 def compress_audio(input_path, output_path):
     # 读取音频文件，设置采样率<default=44100>
